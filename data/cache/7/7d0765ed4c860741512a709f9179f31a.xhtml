@@ -1,0 +1,50 @@
+
+<h1 class="sectionedit1" id="shell-tricks">Shell-tricks</h1>
+<div class="level1">
+
+<p>
+various tricks shells
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Shell-tricks&quot;,&quot;hid&quot;:&quot;shell-tricks&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-51&quot;} -->
+<h2 class="sectionedit2" id="execute_a_command_in_the_background_and_detach_it_from_the_shell">Execute a command in the background and detach it from the shell</h2>
+<div class="level2">
+
+<p>
+This trick is useful for commands in a ssh connection because the command persist even if the ssh connection is closed or if CTRL+C is pressed.<br/>
+
+This is mainly achieved by putting the output of the command in a temporary file and accessing that file by tail with the follow option -f
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Execute a command in the background and detach it from the shell&quot;,&quot;hid&quot;:&quot;execute_a_command_in_the_background_and_detach_it_from_the_shell&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;52-415&quot;} -->
+<h3 class="sectionedit3" id="the_tested_script_not-oneline">The TESTED script (not-oneline):</h3>
+<div class="level3">
+<blockquote><div class="no">
+TEMP_LOG_FILE=tmp.log</div></blockquote>
+<blockquote><div class="no">
+nohup ./process &amp;&gt; “$TEMP_LOG_FILE” &amp; tail -f “$TEMP_LOG_FILE” &amp;</div></blockquote>
+
+<p>
+To restart a closed script:<br/>
+
+Go in the directory in which the script was started and execute<br/>
+
+</p>
+<blockquote><div class="no">
+tail -f tmp.log</div></blockquote>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The TESTED script (not-oneline):&quot;,&quot;hid&quot;:&quot;the_tested_script_not-oneline&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;416-663&quot;} -->
+<h3 class="sectionedit4" id="the_not_tested_script_oneliner">The NOT TESTED script (oneliner)</h3>
+<div class="level3">
+<blockquote><div class="no">
+TEMP_LOG_FILE=tmp.log;nohup ./process &amp;&gt; “$TEMP_LOG_FILE” &amp; tail -f “$TEMP_LOG_FILE” &amp;</div></blockquote>
+
+<p>
+The process of restarting a closed script is the same as described above
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The NOT TESTED script (oneliner)&quot;,&quot;hid&quot;:&quot;the_not_tested_script_oneliner&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;664-&quot;} -->

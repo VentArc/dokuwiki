@@ -1,0 +1,33 @@
+
+<h1 class="sectionedit1" id="batch_transcode_videos_with_ffmpeg">Batch transcode videos with ffmpeg</h1>
+<div class="level1">
+
+<p>
+for now there is just one, but hopefully i will add more
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Batch transcode videos with ffmpeg&quot;,&quot;hid&quot;:&quot;batch_transcode_videos_with_ffmpeg&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-108&quot;} -->
+<h3 class="sectionedit2" id="script_to_convert_all_file_in_the_same_level_directory_to_h264">Script to convert ALL file in the same level directory to H.264.</h3>
+<div class="level3">
+
+<p>
+This script is tested and it works, <strong>however it requires all file to transcode in the same directory AND a directory “newfiles”</strong>.
+The preset can be modified in order to speed up the encoding or slow it down to obtain better quality footage
+</p>
+<blockquote><div class="no">
+for i in *.mp4; do ffmpeg -i “$i” -c:v libx264 -preset ultrafast -crf 20 -c:a aac -b:a 128k “newfiles/${i%.*}.mp4”; done</div></blockquote>
+
+</div>
+
+<h4 id="untested_scripts">Untested scripts</h4>
+<div class="level4">
+
+<p>
+this should remove the need to create a directory “newfiles”
+</p>
+<blockquote><div class="no">
+mkdir newfiles; for i in *.mp4; do ffmpeg -i “$i” -c:v libx264 -preset ultrafast -crf 20 -c:a aac -b:a 128k “newfiles/${i%.*}.mp4”; done</div></blockquote>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Script to convert ALL file in the same level directory to H.264.&quot;,&quot;hid&quot;:&quot;script_to_convert_all_file_in_the_same_level_directory_to_h264&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;109-&quot;} -->

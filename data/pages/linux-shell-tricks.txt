@@ -1,0 +1,22 @@
+====== Shell-tricks ======
+
+various tricks shells
+
+===== Execute a command in the background and detach it from the shell =====
+
+This trick is useful for commands in a ssh connection because the command persist even if the ssh connection is closed or if CTRL+C is pressed.\\
+This is mainly achieved by putting the output of the command in a temporary file and accessing that file by tail with the follow option -f
+
+==== The TESTED script (not-oneline): ====
+>TEMP_LOG_FILE=tmp.log
+
+>nohup ./process &> "$TEMP_LOG_FILE" & tail -f "$TEMP_LOG_FILE" &
+
+To restart a closed script:\\
+Go in the directory in which the script was started and execute\\
+>tail -f tmp.log
+
+==== The NOT TESTED script (oneliner) ====
+>TEMP_LOG_FILE=tmp.log;nohup ./process &> "$TEMP_LOG_FILE" & tail -f "$TEMP_LOG_FILE" &
+
+The process of restarting a closed script is the same as described above

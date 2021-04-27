@@ -1,3 +1,19 @@
 1619120068	192.168.1.13	C	start	ventarc	created		61
 1619120178	192.168.1.13	C	sidebar	ventarc	created		41
 1619120220	192.168.1.13	E	start	ventarc			1
+1619519701	192.168.1.13	E	start	ventarc			37
+1619519926	192.168.1.13	E	start	ventarc			7
+1619520454	192.168.1.13	E	start	ventarc			18
+1619520826	192.168.1.13	C	convert_media	ventarc	created		211
+1619521413	192.168.1.13	C	ffmpeg-batch-transcode-videos	ventarc	created		662
+1619521631	192.168.1.13	E	ffmpeg-batch-transcode-videos	ventarc			57
+1619521724	192.168.1.13	E	ffmpeg-batch-transcode-videos	ventarc			58
+1619521875	192.168.1.13	E	sidebar	ventarc			11
+1619521898	192.168.1.13	E	sidebar	ventarc			8
+1619556145	192.168.1.155	E	start	ventarc			0
+1619556379	192.168.1.13	E	start	ventarc			45
+1619556517	192.168.1.13	E	start	ventarc			0
+1619556564	192.168.1.13	E	sidebar	ventarc			45
+1619557044	192.168.1.13	C	linux-shell-tricks	ventarc	created		428
+1619558068	192.168.1.13	E	linux-shell-tricks	ventarc	finished execute a command in the background		433
+1619558125	192.168.1.13	E	linux-shell-tricks	ventarc	[The NOT TESTED script (oneliner)] 		6

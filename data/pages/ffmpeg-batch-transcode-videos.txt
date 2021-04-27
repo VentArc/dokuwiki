@@ -1,0 +1,17 @@
+====== Batch transcode videos with ffmpeg ======
+
+for now there is just one, but hopefully i will add more
+
+==== Script to convert ALL file in the same level directory to H.264. ====
+
+This script is tested and it works, **however it requires all file to transcode in the same directory AND a directory "newfiles"**.
+The preset can be modified in order to speed up the encoding or slow it down to obtain better quality footage
+
+>for i in *.mp4; do ffmpeg -i "$i" -c:v libx264 -preset ultrafast -crf 20 -c:a aac -b:a 128k "newfiles/${i%.*}.mp4"; done
+
+=== Untested scripts ===
+
+this should remove the need to create a directory "newfiles"
+
+>mkdir newfiles; for i in *.mp4; do ffmpeg -i "$i" -c:v libx264 -preset ultrafast -crf 20 -c:a aac -b:a 128k "newfiles/${i%.*}.mp4"; done
+

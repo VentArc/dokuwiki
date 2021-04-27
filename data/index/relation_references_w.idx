@@ -6,3 +6,6 @@ wiki:pagename
 some:namespaces
 wiki:nonexisting
 wiki:dokuwiki
+convert_media
+ffmpeg-batch-transcode-videos
+linux-shell-tricks

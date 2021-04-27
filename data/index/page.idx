@@ -3,3 +3,7 @@ playground:playground
 wiki:syntax
 start
 sidebar
+wiki:dokuwiki
+convert_media
+ffmpeg-batch-transcode-videos
+linux-shell-tricks
