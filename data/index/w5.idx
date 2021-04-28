@@ -157,3 +157,5 @@ linux
 shell
 trick
 nohup
+child
+touch

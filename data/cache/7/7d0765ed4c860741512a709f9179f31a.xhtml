@@ -21,10 +21,9 @@ This is mainly achieved by putting the output of the command in a temporary file
 <!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Execute a command in the background and detach it from the shell&quot;,&quot;hid&quot;:&quot;execute_a_command_in_the_background_and_detach_it_from_the_shell&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;52-415&quot;} -->
 <h3 class="sectionedit3" id="the_tested_script_not-oneline">The TESTED script (not-oneline):</h3>
 <div class="level3">
-<blockquote><div class="no">
-TEMP_LOG_FILE=tmp.log</div></blockquote>
-<blockquote><div class="no">
-nohup ./process &amp;&gt; “$TEMP_LOG_FILE” &amp; tail -f “$TEMP_LOG_FILE” &amp;</div></blockquote>
+<pre class="code">TEMP_LOG_FILE=tmp.log
+
+nohup ./process &amp;&gt; &quot;$TEMP_LOG_FILE&quot; &amp; tail -f &quot;$TEMP_LOG_FILE&quot; &amp;</pre>
 
 <p>
 To restart a closed script:<br/>
@@ -32,19 +31,49 @@ To restart a closed script:<br/>
 Go in the directory in which the script was started and execute<br/>
 
 </p>
-<blockquote><div class="no">
-tail -f tmp.log</div></blockquote>
+<pre class="code">tail -f tmp.log</pre>
 
 </div>
-<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The TESTED script (not-oneline):&quot;,&quot;hid&quot;:&quot;the_tested_script_not-oneline&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;416-663&quot;} -->
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The TESTED script (not-oneline):&quot;,&quot;hid&quot;:&quot;the_tested_script_not-oneline&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;416-668&quot;} -->
 <h3 class="sectionedit4" id="the_not_tested_script_oneliner">The NOT TESTED script (oneliner)</h3>
 <div class="level3">
-<blockquote><div class="no">
-TEMP_LOG_FILE=tmp.log;nohup ./process &amp;&gt; “$TEMP_LOG_FILE” &amp; tail -f “$TEMP_LOG_FILE” &amp;</div></blockquote>
+<pre class="code">TEMP_LOG_FILE=tmp.log;nohup ./process &amp;&gt; &quot;$TEMP_LOG_FILE&quot; &amp; tail -f &quot;$TEMP_LOG_FILE&quot; &amp;</pre>
 
 <p>
 The process of restarting a closed script is the same as described above
 </p>
 
 </div>
-<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The NOT TESTED script (oneliner)&quot;,&quot;hid&quot;:&quot;the_not_tested_script_oneliner&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;664-&quot;} -->
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The NOT TESTED script (oneliner)&quot;,&quot;hid&quot;:&quot;the_not_tested_script_oneliner&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;669-875&quot;} -->
+<h2 class="sectionedit5" id="remove_all_the_files_in_a_parent_directory">Remove all the files in a parent directory</h2>
+<div class="level2">
+
+<p>
+If you have a parent directory that contains a set of files and the child directory contains a subset of the parent directory files and you want to remove the files that the parent directory and the child directory contains from  the parent directory this is the script for you.
+</p>
+
+<p>
+TLDR: example environment
+</p>
+<pre class="code">mkdir a; cd a/
+touch 1.mp4
+touch 2.mp4
+touch 3.mp4
+mkdir aa; cd aa/
+touch 1.mp4
+touch 2.mp4
+for i in *.mp4; do rm ../&quot;$i&quot;; done
+  
+result:
+cd a/aa; ls -&gt; 1.mp4 2.mp4
+cd ..; ls   -&gt; 3.mp4
+  </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Remove all the files in a parent directory&quot;,&quot;hid&quot;:&quot;remove_all_the_files_in_a_parent_directory&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;876-1453&quot;} -->
+<h3 class="sectionedit6" id="the_tested_script_online">The TESTED script (online)</h3>
+<div class="level3">
+<pre class="code">for i in *.mp4; do rm ../&quot;$i&quot;;done</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The TESTED script (online)&quot;,&quot;hid&quot;:&quot;the_tested_script_online&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1454-&quot;} -->

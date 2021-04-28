@@ -8,15 +8,37 @@ This trick is useful for commands in a ssh connection because the command persis
 This is mainly achieved by putting the output of the command in a temporary file and accessing that file by tail with the follow option -f
 
 ==== The TESTED script (not-oneline): ====
->TEMP_LOG_FILE=tmp.log
-
->nohup ./process &> "$TEMP_LOG_FILE" & tail -f "$TEMP_LOG_FILE" &
+  TEMP_LOG_FILE=tmp.log
+  
+  nohup ./process &> "$TEMP_LOG_FILE" & tail -f "$TEMP_LOG_FILE" &
 
 To restart a closed script:\\
 Go in the directory in which the script was started and execute\\
->tail -f tmp.log
+  tail -f tmp.log
 
 ==== The NOT TESTED script (oneliner) ====
->TEMP_LOG_FILE=tmp.log;nohup ./process &> "$TEMP_LOG_FILE" & tail -f "$TEMP_LOG_FILE" &
+  TEMP_LOG_FILE=tmp.log;nohup ./process &> "$TEMP_LOG_FILE" & tail -f "$TEMP_LOG_FILE" &
 
 The process of restarting a closed script is the same as described above
+
+===== Remove all the files in a parent directory =====
+
+If you have a parent directory that contains a set of files and the child directory contains a subset of the parent directory files and you want to remove the files that the parent directory and the child directory contains from  the parent directory this is the script for you.
+
+TLDR: example environment
+  mkdir a; cd a/
+  touch 1.mp4
+  touch 2.mp4
+  touch 3.mp4
+  mkdir aa; cd aa/
+  touch 1.mp4
+  touch 2.mp4
+  for i in *.mp4; do rm ../"$i"; done
+    
+  result:
+  cd a/aa; ls -> 1.mp4 2.mp4
+  cd ..; ls   -> 3.mp4
+    
+==== The TESTED script (online) ====
+
+  for i in *.mp4; do rm ../"$i";done
