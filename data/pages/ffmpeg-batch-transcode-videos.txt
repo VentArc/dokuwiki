@@ -1,32 +1,38 @@
 ====== Batch transcode videos with ffmpeg ======
 
-for now there is just one, but hopefully i will add more
+This scripts are tested and it works, **however it requires all file to transcode in the same directory AND a directory "newfiles"**.
+The preset can be modified in order to speed up the encoding or slow it down to obtain better quality footage
 
 ===== CPU_ENCODING Script to convert ALL file in the same level directory to H.264. =====
 
-This script is tested and it works, **however it requires all file to transcode in the same directory AND a directory "newfiles"**.
-The preset can be modified in order to speed up the encoding or slow it down to obtain better quality footage
+cpu encoding but it's slow
 
-==== The TESTED script (not-oneline): ====
-  mkdir newfiles
+=== The TESTED script (not-oneline): ===
   for i in *.mp4; do ffmpeg -i "$i" -c:v libx264 -preset ultrafast -crf 20 -c:a aac -b:a 128k "newfiles/${i%.*}.mp4"; done
 
-==== The UNTESTED script (oneline): ====
+=== The UNTESTED script (oneline): ===
 this should remove the need to create a directory "newfiles"
 
-  mkdir newfiles; for i in *.mp4; do ffmpeg -i "$i" -c:v libx264 -preset ultrafast -crf 20 -c:a aac -b:a 128k "newfiles/${i%.*}.mp4"; done
+  for i in *.mp4; do ffmpeg -i "$i" -c:v libx264 -preset ultrafast -crf 20 -c:a aac -b:a 128k "newfiles/${i%.*}.mp4"; done
 
 
 
 ===== iGPU_ENCODING Script to convert ALL file in the same level directory to H.264. =====
 
-This script is tested and it works, **however it requires all file to transcode in the same directory AND a directory "newfiles"**.
+== This script encodes in H264 == 
+
 The preset can be modified in order to speed up the encoding or slow it down to obtain better quality footage.
 
 -qp: quality of encoding lower is better and more slow\\
 -bf: default is 2 
 
-==== The TESTED script (not-oneline): ====
-  mkdir newfiles
+=== The TESTED script: ===
   for i in *.mp4; do ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -i "$i" -c:v h264_vaapi -qp 21 -bf 2  "newfiles/${i%.*}.mp4"; done
+
+== This script converts videos into 720p at 7Mbps VBR == 
+
+-b:v xM change x to change the VBR bitrate \\
+
+=== The TESTED script: ===
+  for i in *.mp4; do ffmpeg -hwaccel vaapi -hwaccel_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i "$i" -vf 'scale_vaapi=w=1280:h=720:format=nv12' -c:v h264_vaapi -b:v 7M -maxrate 7M "newfiles/${i%.*}.mp4"; done
 

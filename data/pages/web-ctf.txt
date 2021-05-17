@@ -1,0 +1,6 @@
+====== Capture the flag: Web ======
+
+===== General exploits =====
+
+===== Solved challenges =====
+  * [[web-lucky-fall|Lucky fall (mongoDB injection)]]

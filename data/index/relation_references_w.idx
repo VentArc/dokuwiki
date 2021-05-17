@@ -9,3 +9,9 @@ wiki:dokuwiki
 convert_media
 ffmpeg-batch-transcode-videos
 linux-shell-tricks
+reverse-ctf
+crypto-ctf
+web-ctf
+pwn-ctf
+network-ctf
+web-lucky-fall

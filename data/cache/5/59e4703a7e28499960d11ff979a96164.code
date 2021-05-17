@@ -1,0 +1,39 @@
+<span class="kw1">from</span> requests <span class="kw1">import</span> Session
+<span class="kw1">from</span> <span class="kw3">os</span>.<span class="me1">path</span> <span class="kw1">import</span> exists
+<span class="kw1">from</span> <span class="kw3">os</span> <span class="kw1">import</span> makedirs
+<span class="kw1">def</span> parse_username<span class="br0">&#40;</span>html: <span class="kw2">str</span><span class="br0">&#41;</span> -<span class="sy0">&gt;</span> <span class="kw2">str</span>:
+    <span class="co1"># Bit of a shitty way but idc</span>
+    <span class="kw1">return</span> html.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">'&lt;div class=&quot;text-center flex-grow-1 text-nowrap&quot;&gt;'</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span>.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot;&lt;/div&gt;&quot;</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+&nbsp;
+&nbsp;
+<span class="kw1">def</span> scrape_usernames<span class="br0">&#40;</span>no_progress_max: <span class="kw2">int</span> <span class="sy0">=</span> <span class="nu0">30</span><span class="br0">&#41;</span> -<span class="sy0">&gt;</span> <span class="kw2">dict</span>:
+    url <span class="sy0">=</span> <span class="st0">&quot;http://lucky-fall.challs.m0lecon.it/&quot;</span>
+    np <span class="sy0">=</span> <span class="nu0">0</span>
+    usernames <span class="sy0">=</span> <span class="br0">&#123;</span><span class="br0">&#125;</span>  <span class="co1"># {username: html_page}</span>
+    <span class="kw1">with</span> Session<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">as</span> sess:
+        <span class="kw1">while</span> np <span class="sy0">&lt;</span> no_progress_max:
+            np +<span class="sy0">=</span> <span class="nu0">1</span>
+            <span class="kw1">with</span> sess.<span class="me1">get</span><span class="br0">&#40;</span>url<span class="br0">&#41;</span> <span class="kw1">as</span> uname_req:
+                html <span class="sy0">=</span> uname_req.<span class="me1">text</span>
+                username <span class="sy0">=</span> parse_username<span class="br0">&#40;</span>html<span class="br0">&#41;</span>
+                <span class="kw1">if</span> username <span class="kw1">not</span> <span class="kw1">in</span> usernames:
+                    usernames.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#123;</span>username: html<span class="br0">&#125;</span><span class="br0">&#41;</span>
+                    np <span class="sy0">=</span> <span class="nu0">0</span>
+    <span class="kw1">return</span> usernames
+&nbsp;
+&nbsp;
+<span class="kw1">def</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    unames <span class="sy0">=</span> scrape_usernames<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    unames_file <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;found_usernames.txt&quot;</span><span class="sy0">,</span> <span class="st0">'w'</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="kw1">not</span> exists<span class="br0">&#40;</span><span class="st0">&quot;./htmls/&quot;</span><span class="br0">&#41;</span>:
+        makedirs<span class="br0">&#40;</span><span class="st0">&quot;./htmls/&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">for</span> username <span class="kw1">in</span> unames:
+        unames_file.<span class="me1">write</span><span class="br0">&#40;</span>username + <span class="st0">'<span class="es0">\n</span>'</span><span class="br0">&#41;</span>
+        <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;./htmls/&quot;</span> + username + <span class="st0">&quot;.html&quot;</span><span class="sy0">,</span> <span class="st0">'w'</span><span class="br0">&#41;</span> <span class="kw1">as</span> html_file:
+            html_file.<span class="me1">write</span><span class="br0">&#40;</span>unames<span class="br0">&#91;</span>username<span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="kw1">if</span> __name__ <span class="sy0">==</span> <span class="st0">&quot;__main__&quot;</span>:
+    main<span class="br0">&#40;</span><span class="br0">&#41;</span>

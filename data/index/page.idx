@@ -7,3 +7,5 @@ wiki:dokuwiki
 convert_media
 ffmpeg-batch-transcode-videos
 linux-shell-tricks
+web-ctf
+web-lucky-fall
