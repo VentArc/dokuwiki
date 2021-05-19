@@ -177,3 +177,5 @@ dumps
 chall
 broke
 exact
+hwmon
+print

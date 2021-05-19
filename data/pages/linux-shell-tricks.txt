@@ -42,3 +42,14 @@ TLDR: example environment
 ==== The TESTED script (online) ====
 
   for i in *.mp4; do rm ../"$i";done
+
+
+===== Change fan speed in asus laptops =====
+
+From the [[https://wiki.archlinux.org/title/Fan_speed_control#Kernel_modules|archlinux wiki]] \\
+All this commands need root access
+  echo 255 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1           # Full fan speed (Value: 255)
+  echo 0 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1             # Fan is stopped (Value: 0)
+  echo 2 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable     # Change fan mode to automatic
+  echo 1 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable      # Change fan mode to manual 
+  echo 0 > /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable      # Change fan mode to full speed

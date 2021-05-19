@@ -179,3 +179,5 @@ unames
 sha256
 during
 choice
+kernel
+enable

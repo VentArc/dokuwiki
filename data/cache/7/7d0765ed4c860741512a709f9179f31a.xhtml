@@ -76,4 +76,20 @@ cd ..; ls   -&gt; 3.mp4
 <pre class="code">for i in *.mp4; do rm ../&quot;$i&quot;;done</pre>
 
 </div>
-<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The TESTED script (online)&quot;,&quot;hid&quot;:&quot;the_tested_script_online&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1454-&quot;} -->
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The TESTED script (online)&quot;,&quot;hid&quot;:&quot;the_tested_script_online&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1454-1530&quot;} -->
+<h2 class="sectionedit7" id="change_fan_speed_in_asus_laptops">Change fan speed in asus laptops</h2>
+<div class="level2">
+
+<p>
+From the <a href="https://wiki.archlinux.org/title/Fan_speed_control#Kernel_modules" class="urlextern" title="https://wiki.archlinux.org/title/Fan_speed_control#Kernel_modules" rel="ugc nofollow">archlinux wiki</a> <br/>
+
+All this commands need root access
+</p>
+<pre class="code">echo 255 &gt; /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1           # Full fan speed (Value: 255)
+echo 0 &gt; /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1             # Fan is stopped (Value: 0)
+echo 2 &gt; /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable     # Change fan mode to automatic
+echo 1 &gt; /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable      # Change fan mode to manual 
+echo 0 &gt; /sys/devices/platform/asus-nb-wmi/hwmon/hwmon[[:print:]]*/pwm1_enable      # Change fan mode to full speed</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Change fan speed in asus laptops&quot;,&quot;hid&quot;:&quot;change_fan_speed_in_asus_laptops&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;1531-&quot;} -->
